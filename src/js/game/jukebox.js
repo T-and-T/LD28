@@ -34,11 +34,22 @@ JukeBox = Class.extend({
             return;
         }
 
-        var audio = new Audio();
+        var audio = new Audio(), def = $.Deferred();
+
+        $(audio).one('loadeddata', function(){
+            def.resolve();
+            console.debug('"' + name + '" audio loaded');
+        }).each(function(){
+            debugger;
+            if (this.complete) $(this).load();
+        });
+
         audio.src = url;
         audio.preload = 'yes';
 
         // audio's are stored within the JukeBox
         this._tracks[name] = audio;
+
+        return def;
     }
 });

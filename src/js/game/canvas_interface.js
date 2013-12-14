@@ -20,8 +20,22 @@ CanvasInterface = Class.extend({
 
     loadImage: function(url, name) {
         'use strict';
-        var img = new Image();
-        img.src = filename;
-        return this._images[name] = img;
+        if (!(name && url)) {
+            throw new Error('Both url and name must be provided');
+        }
+
+        var img = new Image(), def = $.Deferred();
+
+        $(img).one('load', function(){
+            def.resolve();
+            console.debug('"' + name + '" image loaded');
+        }).each(function(){
+            if (this.complete) $(this).load();
+        });
+
+        img.src = url;
+        this._images[name] = img;
+
+        return def;
     }
 });

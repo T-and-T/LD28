@@ -9,6 +9,7 @@ Game = Class.extend({
         STARTSCREEN: 1,
         // whatever
     },
+    ready: [],
 
     init: function init(){
         'use strict';
@@ -42,19 +43,27 @@ Game = Class.extend({
 
     loadAssets: function(){
         'use strict';
-        var name;
+        console.log('Loading assets...');
+
+        var name, asset_promises = [];
 
         if (audio_files) {
             for (name in audio_files) {
-                this.jukebox.loadAudio(audio_files[name], name);
+                asset_promises.push(
+                    this.jukebox.loadAudio(audio_files[name], name)
+                );
             }
         }
 
         if (image_files) {
             for (name in image_files) {
-                this.canvas.loadImage(image_files[name], name);
+                asset_promises.push(
+                    this.canvas.loadImage(image_files[name], name)
+                );
             }
         }
+
+        this.ready = this.ready.concat(asset_promises);
     },
 
     tick: function tick(){}
@@ -62,5 +71,8 @@ Game = Class.extend({
 
 $(document).ready(function(){
     window.game = new Game();
-    game.startLoop();
+
+    $.when(game.ready).then(function() {
+        game.startLoop();
+    });
 });
