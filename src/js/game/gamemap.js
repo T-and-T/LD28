@@ -7,15 +7,15 @@ GameMap = Class.extend({
 
     init: function(map_array){
         this._map_array = map_array;
-        this.on('tick', $.proxy(this.tick, this));
+        this.on('update', $.proxy(this.update, this));
     },
 
-    tick: function(){},
+    update: function(){},
 
     registerEntity: function(entity) {
-        if (!!entity.tick) {
-            this.on('tick',
-                $.proxy(entity.tick, entity)
+        if (!!entity.update) {
+            this.on('update',
+                $.proxy(entity.update, entity)
             );
         }
 

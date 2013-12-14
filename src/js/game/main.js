@@ -76,15 +76,17 @@ Game = Class.extend({
         });
 
         this.loadAssets();
-        this.canvas.displayFullCanvasImage('loading');
+        // this.jukebox.playTrack('loading');
 
-        this.on('tick', $.proxy(this.tick, this));
-        this.on('tick', $.proxy(this.mapTick, this));
+        this.on('update', $.proxy(this.update, this));
+        this.on('update', $.proxy(this.mapUpdate, this));
+
+        this.on('draw', $.proxy(this.draw, this));
     },
 
-    mapTick: function(){
+    mapUpdate: function(){
         if (self.current_map_name !== null) {
-            this.maps[this.current_map_name].map.emit('tick');
+            this.maps[this.current_map_name].map.emit('update');
         }
     },
 
@@ -173,9 +175,7 @@ Game = Class.extend({
         }
 
         var self = this;
-        this._intervalId = setInterval(function(){
-            self.emit('tick');
-        }, 10);
+        this._intervalId = setInterval($.proxy(this.run, this), 10);
 
         console.info('Runloop started');
         document.getElementById('status').style['background-color'] = 'green';
