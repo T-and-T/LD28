@@ -64,11 +64,13 @@ Game = Class.extend({
         this.canvas.displayFullCanvasImage('loading');
 
         this.on('tick', $.proxy(this.tick, this));
-        this.on('tick', function(){
-            if (self.current_map_name !== null) {
-                this.maps[current_map_name].emit('tick');
-            }
-        });
+        this.on('tick', $.proxy(this.mapTick, this));
+    },
+
+    mapTick: function(){
+        if (self.current_map_name !== null) {
+            this.maps[this.current_map_name].map.emit('tick');
+        }
     },
 
     loadGameMap: function(name, map, number){
@@ -88,7 +90,6 @@ Game = Class.extend({
 
     startLoop: function(){
         'use strict';
-        var self = this;
         if (this._current_state == this.stateEnum.LOADING) {
             this.transitionTo('STARTSCREEN');
         }
@@ -99,12 +100,7 @@ Game = Class.extend({
             return;
         }
 
-        this._intervalId = setInterval(
-            function(){
-                self.emit('tick');
-            },
-            1000
-        );
+        this._intervalId = setInterval(self.emit, 1000, 'tick');
     },
 
     stopLoop: function(){
