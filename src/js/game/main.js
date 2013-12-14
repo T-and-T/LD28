@@ -58,6 +58,7 @@ Game = Class.extend({
 
         this.canvas = new CanvasInterface('primary_canvas');
         this.jukebox = new JukeBox();
+        this.keyboard = new Keyboard();
 
         this.loadAssets();
         this.canvas.displayFullCanvasImage('loading');
@@ -91,6 +92,7 @@ Game = Class.extend({
         if (this._current_state == this.stateEnum.LOADING) {
             this.transitionTo('STARTSCREEN');
         }
+        this.keyboard.connect();
 
         if (this._intervalId !== null) {
             console.warning('Runloop already running');
@@ -111,6 +113,8 @@ Game = Class.extend({
             console.warning('No runloop running');
             return;
         }
+        this.keyboard.disconnect();
+
         clearInterval(this._intervalId);
         this._intervalId = null;
     },
