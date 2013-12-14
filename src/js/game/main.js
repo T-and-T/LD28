@@ -1,4 +1,4 @@
-var Game;
+var Game, audio_files, image_files;
 
 
 Game = Class.extend({
@@ -16,6 +16,8 @@ Game = Class.extend({
         this.jukebox = new JukeBox();
 
         // this.canvas.displayImage('/img/loading.jpg');
+        this.loadAssets();
+
         this.jukebox.playTrack('loading');
     },
 
@@ -37,12 +39,22 @@ Game = Class.extend({
     },
 
     loadAssets: function(){
-        /* assets */
+        var name;
+
+        if (audio_files) {
+            for (name in audio_files) {
+                this.jukebox.loadAudio(audio_files[name], name);
+            }
+        }
+
+        if (image_files) {
+            for (name in image_files) {
+                this.canvas.loadImage(audio_assets[name], name);
+            }
+        }
     },
 
-    tick: function tick(){
-
-    }
+    tick: function tick(){}
 });
 
 window.onload = function(){
