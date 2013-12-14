@@ -69,6 +69,12 @@ Game = Class.extend({
         this.keyboard = new Keyboard();
         this.player = new Player(max_x, max_y);
 
+        // this takes prioriy
+        var self=this;
+        this.canvas.loadImage('/img/loading.jpg', 'loading').then(function(){
+            self.canvas.displayFullCanvasImage('loading');
+        });
+
         this.loadAssets();
         this.canvas.displayFullCanvasImage('loading');
 
