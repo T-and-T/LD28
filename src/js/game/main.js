@@ -224,12 +224,27 @@ Game = Class.extend({
         this.ready = this.ready.concat(asset_promises);
     },
 
-    tick: function(){
-        switch(this._current_state) {
-            case(this.stateEnum.LOADING):
-                this.canvas.displayFullCanvasImage('loading');
-                break;
+    run: (function() {
+        this.fps = 60;
+        var loops = 0, skipTicks = 1000 / this.fps,
+            maxFrameSkip = 10,
+            nextGameTick = (new Date()).getTime();
 
+        return function() {
+            loops = 0;
+
+            while ((new Date()).getTime() > nextGameTick && loops < maxFrameSkip) {
+                this.emit('update');
+                nextGameTick += skipTicks;
+                loops++;
+            }
+
+            this.emit('draw');
+        };
+    })(),
+
+    update: function(){
+        switch(this._current_state) {
             case(this.stateEnum.STARTSCREEN):
                 // display start screen
                 console.log('Pretend we have a start screen and that a user just clicked start.');
@@ -237,12 +252,21 @@ Game = Class.extend({
                 break;
 
             case(this.stateEnum.GAMEMAP):
+                this.player.emit('key_info', this.keyboard.kb_states);
+                break;
+        }
+    },
+
+    draw: function(){
+        switch(this._current_state) {
+            case(this.stateEnum.LOADING):
+                this.canvas.displayFullCanvasImage('loading');
+                break;
+
+            case(this.stateEnum.GAMEMAP):
                 // display one of the games maps
                 this.renderMap();
-
-                this.player.emit('key_info', this.keyboard.kb_states);
                 this.renderPlayer();
-
                 break;
         }
     }
