@@ -228,6 +228,7 @@ Game = Class.extend({
                 break;
 
             case(this.stateEnum.GAMEMAP):
+                // display one of the games maps
                 this.renderMap();
 
                 this.player.emit('key_info', this.keyboard.kb_states);
@@ -250,6 +251,7 @@ $(document).ready(function(){
     game.loadGameMap('house', map, 0);
 
     $.when(game.ready).then(function() {
+        console.log('Assets loaded, ready to start mainloop');
 
         document.getElementById('start_button').disabled = false;
         // game.startLoop();
