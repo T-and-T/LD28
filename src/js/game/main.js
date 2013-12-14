@@ -3,12 +3,12 @@ var Game, audio_files, image_files;
 
 Game = Class.extend({
     canvas: null,
+    _intervalId: null,
     stateEnum: {
         LOADING: 0,
         STARTSCREEN: 1,
         // whatever
     },
-    _intervalId: null,
 
     init: function init(){
         'use strict';
@@ -57,7 +57,7 @@ Game = Class.extend({
     tick: function tick(){}
 });
 
-window.onload = function(){
+$(document).ready(function(){
     window.game = new Game();
     game.startLoop();
-};
+});
