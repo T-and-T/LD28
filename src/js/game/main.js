@@ -23,6 +23,7 @@ Transitionable = Class.Mixin.create({
         var possible_transitions = transitions[currentStateName];
         if (possible_transitions.indexOf(name) >= 0) {
             console.debug('' + currentStateName + ' -> ' + name);
+            document.getElementById('game_state').textContent = name;
             this._current_state = this.stateEnum[name];
         } else {
             console.warning('Invalid transition from ' + currentStateName + ' to ' + name);
@@ -237,6 +238,8 @@ $(document).ready(function(){
     game.loadGameMap('house', map, 0);
 
     $.when(game.ready).then(function() {
-        game.startLoop();
+
+        document.getElementById('start_button').disabled = false;
+        // game.startLoop();
     });
 });
