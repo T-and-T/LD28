@@ -1,7 +1,13 @@
 var Player;
 
 Player = Entity.extend({
-    init: function(){
+    max_x: null,
+    max_y: null,
+
+    init: function(max_x, max_y){
+        this.max_x = max_x;
+        this.max_y = max_y;
+
         this.on('key_info',
             $.proxy(this.key_info, this)
         );
@@ -23,6 +29,9 @@ Player = Entity.extend({
 
         if(kb_states[UP]) { y = 1; }
         else if (kb_states[DOWN]) { y = -1; }
+
+        if ((this.x - x) < 0 || (this.x - x) >= this.max_x) return;
+        if ((this.y - y) < 0 || (this.y - y) >= this.max_y) return;
 
         this.x -= x;
         this.y -= y;

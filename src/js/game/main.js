@@ -57,7 +57,7 @@ Game = Class.extend({
     },
     player: null,
 
-    init: function(){
+    init: function(max_x, max_y){
         'use strict';
         var self=this;
         Transitionable.apply(this);
@@ -67,7 +67,7 @@ Game = Class.extend({
         this.canvas = new CanvasInterface('primary_canvas');
         this.jukebox = new JukeBox();
         this.keyboard = new Keyboard();
-        this.player = new Player();
+        this.player = new Player(max_x, max_y);
 
         this.loadAssets();
         this.canvas.displayFullCanvasImage('loading');
@@ -227,9 +227,11 @@ Game = Class.extend({
 
 $(document).ready(function(){
     'use strict';
-    window.game = new Game();
+    var max_x = 15, max_y = 10;
 
-    var gen = new GameMapGenerator();
+    window.game = new Game(max_x, max_y);
+
+    var gen = new GameMapGenerator(max_x, max_y);
     var map = gen.generate();
 
     game.loadGameMap('house', map, 0);
