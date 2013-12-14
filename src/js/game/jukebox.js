@@ -30,8 +30,7 @@ JukeBox = Class.extend({
     loadAudio: function(url, name) {
         'use strict';
         if (!(name && url)) {
-            console.warning('Both url and name must be provided');
-            return;
+            throw new Error('Both url and name must be provided');
         }
 
         var audio = new Audio(), def = $.Deferred();
