@@ -21,8 +21,8 @@ Game = Class.extend({
         this.canvas = new CanvasInterface('primary_canvas');
         this.jukebox = new JukeBox();
 
-        // this.canvas.displayImage('/img/loading.jpg');
         this.loadAssets();
+        this.canvas.displayFullCanvasImage('loading');
 
         this.on('tick', $.proxy(this.tick, this));
         this.on('tick', function(){
