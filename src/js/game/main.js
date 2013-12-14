@@ -177,6 +177,9 @@ Game = Class.extend({
 
     stopLoop: function(){
         'use strict';
+        // if (this.inState('GAMEMAP'))
+        //     this.transitionTo('STARTSCREEN');
+
         if (this._intervalId === null) {
             console.warn('No runloop running');
             return;
