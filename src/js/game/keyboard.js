@@ -1,15 +1,15 @@
-var Keyboard;
+var Keyboard,
+    LEFT = 37,
+    RIGHT = 39,
+    UP = 38,
+    DOWN = 40;
 
 Keyboard = Class.extend({
-    left: false,
-    right: false,
-    jump: false,
-
-    init: function(){},
+    kb_states: {},
 
     connect: function(){
-        window.onkeydown = $.proxy(this.onkeydown, this);
-        window.onkeyup = $.proxy(this.onkeyup, this);
+        window.addEventListener('keydown', $.proxy(this.onKeydown, this), false);
+        window.addEventListener('keyup', $.proxy(this.onKeyup, this), false);
     },
 
     disconnect: function(){
@@ -17,35 +17,15 @@ Keyboard = Class.extend({
         window.onkeyup = null;
     },
 
-    onkeydown: function(e) {
-        var key = e.keyCode ? e.keyCode : e.which;
-        switch (key)
-        {
-            case 37: // left
-                this.left = true;
-                break;
-            case 39: // right
-                this.right = true;
-                break;
-            case 32: // space
-                this.jump = true;
-                break;
-        }
+    isDown: function(keyCode) {
+        return this.kb_states[keyCode];
     },
 
-    onkeyup: function(e) {
-        var key = e.keyCode ? e.keyCode : e.which;
-        switch (key)
-        {
-            case 37: // left
-                this.left = false;
-                break;
-            case 39: // right
-                this.right = false;
-                break;
-            case 32: // space
-                this.jump = false;
-                break;
-        }
+    onKeydown: function(e){
+        this.kb_states[e.keyCode ? e.keyCode : e.which] = true;
+    },
+
+    onKeyup: function(e){
+        delete this.kb_states[e.keyCode ? e.keyCode : e.which];
     }
 });
