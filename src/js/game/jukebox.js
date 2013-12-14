@@ -20,10 +20,9 @@ JukeBox = Class.extend({
     },
 
     stopAll: function(){
-        if (_playing) {
-            for (var cur_name in this._tracks) {
-                this._tracks[cur_name].stop();
-            }
+        'use strict';
+        for (var cur_name in this._tracks) {
+            this._tracks[cur_name].stop();
         }
     },
 
