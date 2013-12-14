@@ -161,7 +161,10 @@ Game = Class.extend({
             return;
         }
 
-        this._intervalId = setInterval(self.emit, 1000, 'tick');
+        var self = this;
+        this._intervalId = setInterval(function(){
+            self.emit('tick');
+        }, 10);
 
         console.info('Runloop started');
         document.getElementById('status').style['background-color'] = 'green';
