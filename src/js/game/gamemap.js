@@ -3,6 +3,8 @@ var GameMap, GameMapGenerator, GameRoom;
 GameMap = Class.extend({
     _entities: [],
 
+    toString: function(){ return "<GameMap>"; },
+
     init: function(map_array){
         this._map_array = map_array;
         this.on('tick', $.proxy(this.tick, this));
@@ -24,7 +26,8 @@ GameMap = Class.extend({
 
 GameRoom = Class.extend({
     type: 0,
-    init: function(type) { this.type = type; }
+    init: function(type) { this.type = type; },
+    toString: function() { return "<GameRoom type=\"" + this.type + "\">"; }
 });
 
 GameMapGenerator = Class.extend({
