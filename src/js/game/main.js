@@ -49,7 +49,7 @@ Game = Class.extend({
 
         if (image_files) {
             for (name in image_files) {
-                this.canvas.loadImage(audio_assets[name], name);
+                this.canvas.loadImage(image_files[name], name);
             }
         }
     },
