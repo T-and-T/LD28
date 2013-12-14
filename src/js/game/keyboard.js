@@ -12,6 +12,11 @@ Keyboard = Class.extend({
         window.onkeyup = $.proxy(this.onkeyup, this);
     },
 
+    disconnect: function(){
+        window.onkeydown = null;
+        window.onkeyup = null;
+    },
+
     onkeydown: function(e) {
         var key = e.keyCode ? e.keyCode : e.which;
         switch (key)
