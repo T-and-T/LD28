@@ -13,8 +13,8 @@ Keyboard = Class.extend({
     },
 
     disconnect: function(){
-        window.onkeydown = null;
-        window.onkeyup = null;
+        window.removeEventListener('keydown');
+        window.removeEventListener('keyup');
     },
 
     isDown: function(keyCode) {
