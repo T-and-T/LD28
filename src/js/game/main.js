@@ -127,24 +127,29 @@ Game = Class.extend({
         }
     },
 
+    cell_width: function(){
+        var width = this.canvas.width();
+        return width / this.maps[this.current_map_name].map._map_array[0].length;
+    },
+
+    cell_height: function(){
+        var height = this.canvas.height();
+        return height / this.maps[this.current_map_name].map._map_array.length;
+    },
+
     renderPlayer: function(){
         var cur_map = this.maps[this.current_map_name],
+
             width = this.canvas.width(),
             height = this.canvas.height(),
-            cell_width = width / cur_map.map._map_array[0].length,
-            cell_height = height / cur_map.map._map_array.length,
-            player = this.player;
 
+            cell_width = this.cell_width(),
+            cell_height = this.cell_height(),
+
+            player = this.player;
 
         var new_x = player.x * cell_width,
             new_y = player.y * cell_height;
-
-        if (new_x > width || new_x < 0) return;
-        if (new_y > height || new_y < 0) return;
-
-        _.debounce(function(){
-            console.log(new_x, new_y);
-        }, 300);
 
         this.canvas._context.fillStyle = 'aqua';
         this.canvas._context.fillRect(new_x, new_y, cell_width, cell_height);
