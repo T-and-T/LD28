@@ -13,7 +13,10 @@ Game = Class.extend({
     init: function init(){
         'use strict';
         this.canvas = new CanvasInterface('primary_canvas');
+        this.jukebox = new JukeBox();
+
         // this.canvas.displayImage('/img/loading.jpg');
+        this.jukebox.playTrack('loading');
     },
 
     startLoop: function start(){
