@@ -1,6 +1,5 @@
 var Game, audio_files, image_files;
 
-
 Game = Class.extend({
     canvas: null,
     _intervalId: null,
@@ -15,7 +14,7 @@ Game = Class.extend({
     current_map_name: null,
     maps: {},
 
-    init: function init(){
+    init: function(){
         'use strict';
         var self=this;
 

@@ -38,7 +38,6 @@ JukeBox = Class.extend({
             def.resolve();
             console.debug('"' + name + '" audio loaded');
         }).each(function(){
-            debugger;
             if (this.complete) $(this).load();
         });
 
