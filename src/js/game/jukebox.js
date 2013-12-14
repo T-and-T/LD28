@@ -32,6 +32,7 @@ JukeBox = Class.extend({
         var audio = new Audio(), def = $.Deferred();
 
         $(audio).one('loadeddata', function(){
+            audio.load();
             def.resolve();
             console.debug('"' + name + '" audio loaded');
         }).each(function(){
