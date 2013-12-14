@@ -18,7 +18,7 @@ CanvasInterface = Class.extend({
         this._context.drawImage(this._images[name], 0, 0);
     },
 
-    loadImage: function(filename, name) {
+    loadImage: function(url, name) {
         'use strict';
         var img = new Image();
         img.src = filename;
