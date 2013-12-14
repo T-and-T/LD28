@@ -13,22 +13,41 @@ Game = Class.extend({
 
     init: function init(){
         'use strict';
+        var self=this;
+
         this.canvas = new CanvasInterface('primary_canvas');
         this.jukebox = new JukeBox();
 
         // this.canvas.displayImage('/img/loading.jpg');
         this.loadAssets();
 
+        this.on('tick', $.proxy(this.tick, this));
+        this.on('tick', function(){
+            if (self.current_map_name !== null) {
+                this.maps[current_map_name].emit('tick');
+            }
+        });
+    },
+
+
         this.jukebox.playTrack('loading');
     },
 
     startLoop: function start(){
         'use strict';
+        var self = this;
+
         if (this._intervalId !== null) {
             console.warning('Runloop already running');
             return;
         }
-        this._intervalId = setInterval(this.tick, 10);
+
+        this._intervalId = setInterval(
+            function(){
+                self.emit('tick');
+            },
+            1000
+        );
     },
 
     stopLoop: function(){
@@ -66,7 +85,25 @@ Game = Class.extend({
         this.ready = this.ready.concat(asset_promises);
     },
 
-    tick: function tick(){}
+    tick: function(){
+        console.log('tick');
+        switch(this._current_state) {
+            case(this.stateEnum.LOADING):
+                this.canvas.displayFullCanvasImage('loading');
+                break;
+
+            case(this.stateEnum.STARTSCREEN):
+                // display start screen
+                console.log('Pretend we have a start screen and that a user just clicked start.');
+                this.switchToMap('house');
+                break;
+
+            case(this.stateEnum.GAMEMAP):
+                debugger;
+                this.renderMap()
+                break;
+        }
+    }
 });
 
 $(document).ready(function(){
