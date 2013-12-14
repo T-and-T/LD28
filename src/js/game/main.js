@@ -22,6 +22,7 @@ Game = Class.extend({
     },
 
     startLoop: function start(){
+        'use strict';
         if (this._intervalId !== null) {
             console.warning('Runloop already running');
             return;
@@ -30,6 +31,7 @@ Game = Class.extend({
     },
 
     stopLoop: function(){
+        'use strict';
         if (this._intervalId === null) {
             console.warning('No runloop running');
             return;
@@ -39,6 +41,7 @@ Game = Class.extend({
     },
 
     loadAssets: function(){
+        'use strict';
         var name;
 
         if (audio_files) {

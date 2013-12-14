@@ -8,6 +8,7 @@ JukeBox = Class.extend({
     init: function() {},
 
     playTrack: function(name, loop) {
+        'use strict';
         loop = loop || false; // default to not looping
 
         if (!this._tracks[name]) {
@@ -27,6 +28,7 @@ JukeBox = Class.extend({
     },
 
     loadAudio: function(url, name) {
+        'use strict';
         if (!(name && url)) {
             console.warning('Both url and name must be provided');
             return;
