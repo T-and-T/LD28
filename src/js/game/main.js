@@ -60,7 +60,6 @@ Game = Class.extend({
 
     init: function(max_x, max_y){
         'use strict';
-        var self=this;
         Transitionable.apply(this);
 
         this.map_name = document.getElementById('map_name');
@@ -203,7 +202,6 @@ Game = Class.extend({
     },
 
     tick: function(){
-        console.log('tick');
         switch(this._current_state) {
             case(this.stateEnum.LOADING):
                 this.canvas.displayFullCanvasImage('loading');

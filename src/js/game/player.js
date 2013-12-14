@@ -17,11 +17,7 @@ Player = Entity.extend({
         return "<Player x=" + this.x + ", y=" + this.y + ">";
     },
 
-    key_info: function(){
-        return _.debounce(this._key_info, 1000).apply(this, arguments);
-    },
-
-    _key_info: function(kb_states){
+    key_info: _.debounce(function(kb_states){
         var x = 0, y = 0;
 
         if(kb_states[LEFT]) { x = 1; }
@@ -35,5 +31,5 @@ Player = Entity.extend({
 
         this.x -= x;
         this.y -= y;
-    }
+    }, 500)
 });

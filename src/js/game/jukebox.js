@@ -3,9 +3,6 @@ var JukeBox;
 
 JukeBox = Class.extend({
     _tracks: {},
-    _playing: false,
-
-    init: function() {},
 
     playTrack: function(name, loop) {
         'use strict';

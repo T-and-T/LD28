@@ -13,12 +13,12 @@ GameMap = Class.extend({
     tick: function(){},
 
     registerEntity: function(entity) {
-        debugger;
         if (!!entity.tick) {
             this.on('tick',
                 $.proxy(entity.tick, entity)
             );
         }
+
         this._entities.push(entity);
     }
 });
