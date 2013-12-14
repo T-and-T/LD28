@@ -12,6 +12,8 @@ CanvasInterface = Class.extend({
 
         this._context = this._canvas.getContext('2d');
         debugger;
+
+        this.loadAssets();
     },
 
     displayImage: function displayImage(url) {

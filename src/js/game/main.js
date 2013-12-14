@@ -33,6 +33,10 @@ Game = Class.extend({
         this._intervalId = null;
     },
 
+    loadAssets: function(){
+        /* assets */
+    },
+
     tick: function tick(){
 
     }
