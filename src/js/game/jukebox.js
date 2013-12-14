@@ -26,16 +26,15 @@ JukeBox = Class.extend({
         }
     },
 
-    loadAudio: function(url) {
-        var name,
-            audio = new Audio();
+    loadAudio: function(url, name) {
+        if (!(name && url)) {
+            console.warning('Both url and name must be provided');
+            return;
+        }
+
+        var audio = new Audio();
         audio.src = url;
         audio.preload = 'yes';
-
-        // i want to stay away from regex... - Dom
-        name = url.split('/');
-        name = name[name.length].split('.');
-        name = name[0];
 
         // audio's are stored within the JukeBox
         this._tracks[name] = audio;
