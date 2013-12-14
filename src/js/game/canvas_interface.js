@@ -14,8 +14,22 @@ CanvasInterface = Class.extend({
         this._context = this._canvas.getContext('2d');
     },
 
-    displayImage: function displayImage(name) {
-        this._context.drawImage(this._images[name], 0, 0);
+    displayFullCanvasImage: function (name) {
+        'use strict';
+        this._context.drawImage(
+            this._images[name],
+            0, 0,
+            this.width(),
+            this.height()
+        );
+    },
+
+    width: function() { return this._canvas.width; },
+    height: function() { return this._canvas.height; },
+
+    clear: function(){
+        this._context.fillStyle = "#8999ff";
+        this._context.fillRect(0, 0, this.width(), this.height());
     },
 
     loadImage: function(url, name) {
