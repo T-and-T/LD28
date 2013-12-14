@@ -2,13 +2,14 @@ var Game, audio_files, image_files;
 
 
 Transitionable = Class.Mixin.create({
-    inverseStateEnum: function(){
+    inverseStateEnum: _.once(function(){
+
         var obj = {};
         for(var name in this.stateEnum) {
             obj[this.stateEnum[name]] = name;
         }
         return obj;
-    },
+    }),
 
     transitionTo: function(name) {
         var transitions = this.transitions,
