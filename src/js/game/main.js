@@ -7,9 +7,13 @@ Game = Class.extend({
     stateEnum: {
         LOADING: 0,
         STARTSCREEN: 1,
+        GAMEMAP: 2
         // whatever
     },
+    _current_state: 0,
     ready: [],
+    current_map_name: null,
+    maps: {},
 
     init: function init(){
         'use strict';
@@ -29,11 +33,19 @@ Game = Class.extend({
         });
     },
 
-
-        this.jukebox.playTrack('loading');
+    loadGameMap: function(name, map, number){
+        this.maps[name] = {
+            map: map,
+            number: number
+        };
     },
 
-    startLoop: function start(){
+    switchToMap: function(name) {
+        this.current_map_name = name;
+        // TODO: transition
+    },
+
+    startLoop: function(){
         'use strict';
         var self = this;
 
@@ -107,7 +119,13 @@ Game = Class.extend({
 });
 
 $(document).ready(function(){
+    'use strict';
     window.game = new Game();
+
+    var gen = new GameMapGenerator();
+    var map = gen.generate();
+
+    game.loadGameMap('house', map, 0);
 
     $.when(game.ready).then(function() {
         game.startLoop();
