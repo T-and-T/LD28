@@ -17,7 +17,7 @@ Transitionable = Class.Mixin.create({
             currentStateName = inverse[this._current_state];
 
         if (!transitions[currentStateName]) {
-            console.warning('Cannot transition away from '+name);
+            console.warn('Cannot transition away from '+name);
             return;
         }
 
@@ -27,8 +27,7 @@ Transitionable = Class.Mixin.create({
             document.getElementById('game_state').textContent = name;
             this._current_state = this.stateEnum[name];
         } else {
-            console.warning('Invalid transition from ' + currentStateName + ' to ' + name);
-            return;
+            console.warn('Invalid transition from ' + currentStateName + ' to ' + name);
         }
     },
 
@@ -159,7 +158,7 @@ Game = Class.extend({
         this.keyboard.connect();
 
         if (this._intervalId !== null) {
-            console.warning('Runloop already running');
+            console.warn('Runloop already running');
             return;
         }
 
@@ -169,7 +168,7 @@ Game = Class.extend({
     stopLoop: function(){
         'use strict';
         if (this._intervalId === null) {
-            console.warning('No runloop running');
+            console.warn('No runloop running');
             return;
         }
         this.keyboard.disconnect();
