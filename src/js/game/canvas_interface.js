@@ -4,6 +4,7 @@ var CanvasInterface;
 CanvasInterface = Class.extend({
     _canvas: null,
     _context: null,
+    _images: {},
 
     init: function init(canvas_id) {
         'use strict';
@@ -13,14 +14,13 @@ CanvasInterface = Class.extend({
         this._context = this._canvas.getContext('2d');
     },
 
-    displayImage: function displayImage(url) {
-        this._context.drawImage(url, 0, 0, this._canvas.width, this._canvas.height);
-        //
+    displayImage: function displayImage(name) {
+        this._context.drawImage(this._images[name], 0, 0);
     },
 
-    loadImage: function(filename) {
+    loadImage: function(filename, name) {
         var img = new Image();
         img.src = filename;
-        return img;
+        return this._images[name] = img;
     }
 });
