@@ -162,6 +162,9 @@ Game = Class.extend({
         }
 
         this._intervalId = setInterval(self.emit, 1000, 'tick');
+
+        console.info('Runloop started');
+        document.getElementById('status').style['background-color'] = 'green';
     },
 
     stopLoop: function(){
@@ -174,6 +177,9 @@ Game = Class.extend({
 
         clearInterval(this._intervalId);
         this._intervalId = null;
+
+        console.info('Runloop halted');
+        document.getElementById('status').style['background-color'] = 'red';
     },
 
     loadAssets: function(){
