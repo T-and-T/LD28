@@ -28,6 +28,10 @@ Transitionable = Class.Mixin.create({
             console.warning('Invalid transition from ' + currentStateName + ' to ' + name);
             return;
         }
+    },
+
+    inState: function(name){
+        return this.inverseStateEnum()[this._current_state] == name;
     }
 });
 
@@ -84,18 +88,16 @@ Game = Class.extend({
     },
 
     switchToMap: function(name) {
-        if (this._current_state == this.stateEnum.STARTSCREEN) {
+        if (this.inState('STARTSCREEN'))
             this.transitionTo('GAMEMAP');
-        }
         this.current_map_name = name;
         // TODO: transition
     },
 
     startLoop: function(){
         'use strict';
-        if (this._current_state == this.stateEnum.LOADING) {
+        if (this.inState('LOADING'))
             this.transitionTo('STARTSCREEN');
-        }
         this.keyboard.connect();
 
         if (this._intervalId !== null) {
