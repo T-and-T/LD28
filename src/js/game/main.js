@@ -1,5 +1,37 @@
 var Game, audio_files, image_files;
 
+
+Transitionable = Class.Mixin.create({
+    inverseStateEnum: function(){
+        var obj = {};
+        for(var name in this.stateEnum) {
+            obj[this.stateEnum[name]] = name;
+        }
+        return obj;
+    },
+
+    transitionTo: function(name) {
+        var transitions = this.transitions,
+            inverse = this.inverseStateEnum(),
+            currentStateName = inverse[this._current_state];
+
+        if (!transitions[currentStateName]) {
+            console.warning('Cannot transition away from '+name);
+            return;
+        }
+
+        var possible_transitions = transitions[currentStateName];
+        if (possible_transitions.indexOf(name) >= 0) {
+            console.debug('' + currentStateName + ' -> ' + name);
+            this._current_state = this.stateEnum[name];
+        } else {
+            console.warning('Invalid transition from ' + currentStateName + ' to ' + name);
+            return;
+        }
+    }
+});
+
+
 Game = Class.extend({
     canvas: null,
     _intervalId: null,
@@ -13,10 +45,16 @@ Game = Class.extend({
     ready: [],
     current_map_name: null,
     maps: {},
+    transitions: {
+        'LOADING': ['STARTSCREEN'],
+        'STARTSCREEN': ['GAMEMAP'],
+        'GAMEMAP': ['STARTSCREEN']
+    },
 
     init: function(){
         'use strict';
         var self=this;
+        Transitionable.apply(this);
 
         this.canvas = new CanvasInterface('primary_canvas');
         this.jukebox = new JukeBox();
@@ -40,6 +78,9 @@ Game = Class.extend({
     },
 
     switchToMap: function(name) {
+        if (this._current_state == this.stateEnum.STARTSCREEN) {
+            this.transitionTo('GAMEMAP');
+        }
         this.current_map_name = name;
         // TODO: transition
     },
@@ -47,6 +88,9 @@ Game = Class.extend({
     startLoop: function(){
         'use strict';
         var self = this;
+        if (this._current_state == this.stateEnum.LOADING) {
+            this.transitionTo('STARTSCREEN');
+        }
 
         if (this._intervalId !== null) {
             console.warning('Runloop already running');
