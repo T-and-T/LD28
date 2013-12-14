@@ -4,6 +4,7 @@ GameMap = Class.extend({
     _entities: [],
 
     init: function(map_array){
+        this._map_array = map_array;
         this.on('tick', $.proxy(this.tick, this));
     },
 
@@ -46,15 +47,19 @@ GameMapGenerator = Class.extend({
             this._current_map.push([]);
 
             for (var x=0; x<width; x++) {
-                this._current_map[this._current_map.length - 1].push([]);
+                this._current_map[this._current_map.length - 1].push(null);
             }
         }
     },
 
     generate: function(){
-        this.generateEmpty(width, height);
+        this.generateEmpty(this.width, this.height);
 
-        this._current_map[0][0] = new GameMap(0);
+        for (var y=0; y<this.height; y++) {
+            for (var x=0; x<this.width; x++) {
+                this._current_map[y][x] = new GameRoom(0);
+            }
+        }
 
         return new GameMap(this._current_map);
     }
