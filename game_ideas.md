@@ -16,3 +16,5 @@ one for each level? :D
 The lack of each respective organ impair your ability throughout the level;
 could do it so that you could do it so that they lose one organ per level throughout the game, gradually making the levels more and more difficult?
 
+Your Inventory Is Limited To One
+================================
