@@ -55,6 +55,7 @@ Game = Class.extend({
         'STARTSCREEN': ['GAMEMAP'],
         'GAMEMAP': ['STARTSCREEN']
     },
+    player: null,
 
     init: function(){
         'use strict';
@@ -66,6 +67,7 @@ Game = Class.extend({
         this.canvas = new CanvasInterface('primary_canvas');
         this.jukebox = new JukeBox();
         this.keyboard = new Keyboard();
+        this.player = new Player();
 
         this.loadAssets();
         this.canvas.displayFullCanvasImage('loading');
@@ -92,6 +94,29 @@ Game = Class.extend({
             this.transitionTo('GAMEMAP');
         this.current_map_name = name;
         // TODO: transition
+    },
+
+    renderPlayer: function(){
+        var cur_map = this.maps[this.current_map_name],
+            width = this.canvas.width(),
+            height = this.canvas.height(),
+            cell_width = width / cur_map.map._map_array[0].length,
+            cell_height = height / cur_map.map._map_array.length,
+            player = this.player;
+
+
+        var new_x = player.x * cell_width,
+            new_y = player.y * cell_height;
+
+        if (new_x > width || new_x < 0) return;
+        if (new_y > height || new_y < 0) return;
+
+        _.debounce(function(){
+            console.log(new_x, new_y);
+        }, 300);
+
+        this.canvas._context.fillStyle = 'aqua';
+        this.canvas._context.fillRect(new_x, new_y, cell_width, cell_height);
     },
 
     startLoop: function(){
@@ -159,8 +184,11 @@ Game = Class.extend({
                 break;
 
             case(this.stateEnum.GAMEMAP):
-                debugger;
                 this.renderMap()
+
+                this.player.emit('key_info', this.keyboard.kb_states);
+                this.renderPlayer();
+
                 break;
         }
     }
