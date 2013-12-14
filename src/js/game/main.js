@@ -96,6 +96,37 @@ Game = Class.extend({
         // TODO: transition
     },
 
+    renderMap: function(){
+        var cur_map = this.maps[this.current_map_name],
+            width = this.canvas.width(),
+            height = this.canvas.height(),
+            cell_width = width / cur_map.map._map_array[0].length,
+            cell_height = height / cur_map.map._map_array.length;
+
+        this.map_name.textContent = this.current_map_name;
+
+        this.canvas.clear();
+
+        for (var y = cur_map.map._map_array.length - 1; y >= 0; y--) {
+            var row = cur_map.map._map_array[y];
+
+            for (var x = row.length - 1; x >= 0; x--) {
+                this.canvas._context.fillStyle = [
+                    '#000000',
+                    'black',
+                    'green',
+                    'red',
+                    'grey'
+                ][row[x].type - 1];
+
+                this.canvas._context.fillRect(
+                    x * cell_width, y * cell_height,
+                    cell_width, cell_height
+                );
+            }
+        }
+    },
+
     renderPlayer: function(){
         var cur_map = this.maps[this.current_map_name],
             width = this.canvas.width(),
@@ -184,7 +215,7 @@ Game = Class.extend({
                 break;
 
             case(this.stateEnum.GAMEMAP):
-                this.renderMap()
+                this.renderMap();
 
                 this.player.emit('key_info', this.keyboard.kb_states);
                 this.renderPlayer();
