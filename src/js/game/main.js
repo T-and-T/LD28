@@ -45,6 +45,7 @@ Game = Class.extend({
     ready: [],
     current_map_name: null,
     maps: {},
+    map_name: null,
     transitions: {
         'LOADING': ['STARTSCREEN'],
         'STARTSCREEN': ['GAMEMAP'],
@@ -55,6 +56,8 @@ Game = Class.extend({
         'use strict';
         var self=this;
         Transitionable.apply(this);
+
+        this.map_name = document.getElementById('map_name');
 
         this.canvas = new CanvasInterface('primary_canvas');
         this.jukebox = new JukeBox();
