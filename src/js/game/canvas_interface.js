@@ -17,5 +17,11 @@ CanvasInterface = Class.extend({
     displayImage: function displayImage(url) {
         this._context.drawImage(url, 0, 0, this._canvas.width, this._canvas.height);
         //
+    },
+
+    loadImage: function(filename) {
+        var img = new Image();
+        img.src = filename;
+        return img;
     }
 });
