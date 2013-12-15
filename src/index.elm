@@ -1,6 +1,20 @@
 import Keyboard
 
-main = foldr1 above <~ combine [display, tiltInfo, driftInfo, asText <~ isStillGoing]
+main = foldr1 above <~ combine [ifthenelse <~ isStillGoing ~ mainGame ~ deathScreen, score]
+
+ifthenelse : Bool -> a -> a -> a
+ifthenelse b x y = if b then x else y
+
+mainGame = display
+
+death : Float -> Element
+death o = collage 1000 500 [moveX o <| toForm <| image 400 400 "img/crash.png"]
+
+deathScreen : Signal Element
+deathScreen = death <~ offset
+
+offset : Signal Float
+offset = (*) 50 <~ keepWhen isStillGoing 0 drift
 
 wobble : Signal Bool
 wobble = foldp (\_ -> not) False <| every (500 * millisecond)
@@ -8,7 +22,7 @@ wobble = foldp (\_ -> not) False <| every (500 * millisecond)
 chooseImg c = if c then "img/forward2.png" else "img/forward1.png"
 
 display : Signal Element
-display = collage 900 500 . (\x->[x]) <~ (rotate <~ rotationAngle ~ (toForm . image 300 500 . chooseImg <~ wobble))
+display = collage 900 500 . (\x->[x]) <~ lift2 moveX offset (rotate <~ rotationAngle ~ (toForm . image 300 500 . chooseImg <~ wobble))
 
 tiltInfo : Signal Element
 tiltInfo = centered . toText . (++) "Tilt (keep between -1 and 1): " . show <~ tilt
@@ -39,3 +53,7 @@ driftSafe = (\x -> x > -10 && x < 10) <~ drift
 
 isStillGoing : Signal Bool
 isStillGoing = dropWhen ((&&) <~ tiltSafe ~ driftSafe) True (constant False)
+
+scoreNo = count (keepWhen isStillGoing 0 (every second))
+
+score = centered . toText . (++) "Score: " . show <~ scoreNo
