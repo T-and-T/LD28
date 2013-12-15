@@ -69,8 +69,10 @@ Game = Class.extend({
     },
 
     renderMap: function(){
-        var cur_map = this.maps[this.current_map_name],
-            width = this.canvas.width(),
+        var cur_map = this.maps[this.current_map_name];
+        if (!cur_map) return;
+
+        var width = this.canvas.width(),
             height = this.canvas.height(),
             cell_width = width / cur_map.map._map_array[0].length,
             cell_height = height / cur_map.map._map_array.length;
