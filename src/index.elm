@@ -5,5 +5,8 @@ wobble = foldp (\_ -> not) False <| every (500 * millisecond)
 
 chooseImg c = if c then "img/forward2.png" else "img/forward1.png"
 
-tilt : Signal Int
+tilt : Signal Float
 tilt = constant 0
+
+drift : Signal Float
+drift = foldp (+) 0 tilt
