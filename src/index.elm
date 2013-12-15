@@ -1,12 +1,9 @@
-main = image 300 500 . chooseImg <~ foldp (\_ -> not) False (every (500 * millisecond))
+main = image 300 500 . chooseImg <~ wobble
 
-chooseImg c = if c then "forward2.png" else "forward1.png"
+wobble : Signal Bool
+wobble = foldp (\_ -> not) False <| every (500 * millisecond)
 
-pitch : Signal Int
-pitch = constant 0
+chooseImg c = if c then "img/forward2.png" else "img/forward1.png"
 
-roll : Signal Int
-roll = constant 0
-
-yaw : Signal Int
-yaw = constant 0
+tilt : Signal Int
+tilt = constant 0
