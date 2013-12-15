@@ -106,7 +106,6 @@ Game = Class.extend({
 
         $(this.canvas._canvas).click(function(){
             if (self.inState('STARTSCREEN')) {
-                debugger;
                 self.switchToMap('house');
             }
         });

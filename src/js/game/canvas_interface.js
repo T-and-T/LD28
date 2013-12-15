@@ -46,7 +46,6 @@ CanvasInterface = Class.extend({
         var img = new Image(), def = $.Deferred();
 
         $(img).one('load', function(){
-            $(img).load();
             def.resolve();
             console.debug('"' + name + '" image loaded');
         }).each(function(){
