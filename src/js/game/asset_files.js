@@ -3,5 +3,6 @@ audio_files = {
 };
 
 image_files = {
-    'loading': '/img/loading.jpg'
+    'player': '/img/player.png'
+    // 'loading': '/img/loading.jpg'
 };

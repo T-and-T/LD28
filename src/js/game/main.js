@@ -142,8 +142,7 @@ Game = Class.extend({
         var new_x = player.x * cell_width,
             new_y = player.y * cell_height;
 
-        this.canvas._context.fillStyle = 'aqua';
-        this.canvas._context.fillRect(new_x, new_y, cell_width, cell_height);
+        this.canvas.drawImage('player', new_x, new_y);
     },
 
     startLoop: function(){
@@ -264,7 +263,7 @@ Game = Class.extend({
 
 $(document).ready(function(){
     'use strict';
-    var max_x = 15, max_y = 10;
+    var max_x = 67, max_y = 18;
 
     window.game = new Game(max_x, max_y);
 

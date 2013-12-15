@@ -22,6 +22,13 @@ CanvasInterface = Class.extend({
         );
     },
 
+    drawImage: function(name, /* other args */){
+        'use strict';
+        var args = [this._images[name]];
+        args = args.concat(_.toArray(arguments).slice(1));
+        return this._context.drawImage.apply(this._context, args);
+    },
+
     width: function() { return this._canvas.width; },
     height: function() { return this._canvas.height; },
 
