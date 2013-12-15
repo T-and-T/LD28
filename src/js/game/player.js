@@ -11,10 +11,6 @@ Player = Entity.extend({
         );
     },
 
-    toString: function(){
-        return "<Player x=" + this.x + ", y=" + this.y + ">";
-    },
-
     currentSpriteName: function(){
         if (this.direction === LEFT || this.direction === null) {
             return 'player_left';

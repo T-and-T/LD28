@@ -13,5 +13,9 @@ Entity = Class.extend({
         this.max_y = max_y;
 
         return this._super();
+    },
+
+    toString: function(){
+        return "<" + this.name + " x=" + this.x + ", y=" + this.y + ">";
     }
 });
