@@ -101,6 +101,23 @@ Game = Class.extend({
         }
     },
 
+    renderStartScreen: function(){
+        var self=this;
+
+        $(this.canvas._canvas).click(function(){
+            if (self.inState('STARTSCREEN')) {
+                debugger;
+                self.switchToMap('house');
+            }
+        });
+
+        this.canvas._context.fillText(
+            "Click to start",
+            this.canvas.width() / 2,
+            this.canvas.height() / 2
+        );
+    },
+
     cell_width: function(){
         var width = this.canvas.width();
         return width / this.maps[this.current_map_name].map._map_array[0].length;
@@ -212,9 +229,6 @@ Game = Class.extend({
     update: function(){
         switch(this._current_state) {
             case(this.stateEnum.STARTSCREEN):
-                // display start screen
-                console.log('Pretend we have a start screen and that a user just clicked start.');
-                this.switchToMap('house');
                 break;
 
             case(this.stateEnum.GAMEMAP):
@@ -230,6 +244,10 @@ Game = Class.extend({
         switch(this._current_state) {
             case(this.stateEnum.LOADING):
                 this.canvas.displayFullCanvasImage('loading');
+                break;
+
+            case(this.stateEnum.STARTSCREEN):
+                this.renderStartScreen();
                 break;
 
             case(this.stateEnum.GAMEMAP):
