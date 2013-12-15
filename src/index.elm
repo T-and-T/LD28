@@ -1,6 +1,6 @@
 import Keyboard
 
-main = foldr1 above <~ combine [display, tiltInfo, driftInfo]
+main = foldr1 above <~ combine [display, tiltInfo, driftInfo, asText <~ isStillGoing]
 
 wobble : Signal Bool
 wobble = foldp (\_ -> not) False <| every (500 * millisecond)
@@ -30,3 +30,12 @@ rotationAngle = asin . flip (/) (0-sqrt 2) <~ tilt
 
 drift : Signal Float
 drift = foldp (+) 0 tilt
+
+tiltSafe : Signal Bool
+tiltSafe = (\x -> x > -1 && x < 1) <~ tilt
+
+driftSafe : Signal Bool
+driftSafe = (\x -> x > -10 && x < 10) <~ drift
+
+isStillGoing : Signal Bool
+isStillGoing = dropWhen ((&&) <~ tiltSafe ~ driftSafe) True (constant False)
