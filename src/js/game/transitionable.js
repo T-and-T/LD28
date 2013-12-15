@@ -13,6 +13,8 @@ Transitionable = Class.Mixin.create({
             inverse = this.inverseStateEnum(),
             currentStateName = inverse[this._current_state];
 
+        if (name === currentStateName) return;
+
         if (!transitions[currentStateName]) {
             console.warn('Cannot transition away from '+name);
             return;
