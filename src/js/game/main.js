@@ -49,7 +49,7 @@ Game = Class.extend({
     },
 
     mapUpdate: function(){
-        if (self.current_map_name !== null) {
+        if (this.current_map_name !== null) {
             this.maps[this.current_map_name].map.emit('update');
         }
     },
