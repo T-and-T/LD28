@@ -1,13 +1,10 @@
 var Player;
 
 Player = Entity.extend({
-    max_x: null,
-    max_y: null,
     direction: null,
 
     init: function(max_x, max_y){
-        this.max_x = max_x;
-        this.max_y = max_y;
+        this._super('Player', max_x, max_y);
 
         this.on('key_info',
             $.proxy(this.key_info, this)
