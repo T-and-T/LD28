@@ -1,3 +1,5 @@
+import Keyboard
+
 main = foldr1 above <~ combine [display, tiltInfo, driftInfo]
 
 wobble : Signal Bool
@@ -14,8 +16,14 @@ tiltInfo = centered . toText . (++) "Tilt (keep between -1 and 1): " . show <~ t
 driftInfo : Signal Element
 driftInfo = centered . toText . (++) "Drift (keep between -10 and 10): " . show <~ drift
 
+pedalStep : Bool -> Float
+pedalStep b = if b then 0.2 else -0.2
+
+leaning : Signal Float
+leaning = (*) 0.25 . toFloat . .x <~ sampleOn wobble Keyboard.arrows
+
 tilt : Signal Float
-tilt = constant 0
+tilt = foldp (+) 0 <| (+) . pedalStep <~ wobble ~ leaning
 
 drift : Signal Float
 drift = foldp (+) 0 tilt
