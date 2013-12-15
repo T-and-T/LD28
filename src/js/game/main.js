@@ -218,6 +218,9 @@ Game = Class.extend({
             case(this.stateEnum.GAMEMAP):
                 this.player.emit('key_info', this.keyboard.kb_states);
                 break;
+
+            default:
+                throw Error('Unknown state "' + this.inverseStateEnum()[this._current_state] + '"');
         }
     },
 
@@ -232,6 +235,9 @@ Game = Class.extend({
                 this.renderMap();
                 this.renderPlayer();
                 break;
+
+            default:
+                throw Error('Unknown state "' + this.inverseStateEnum()[this._current_state] + '"');
         }
     }
 });
