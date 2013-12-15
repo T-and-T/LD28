@@ -22,8 +22,10 @@ CanvasInterface = Class.extend({
         );
     },
 
-    drawImage: function(name, /* other args */){
+    drawImage: function(name){
         'use strict';
+        /* all other args besides name are passed through to drawImage */
+
         var args = [this._images[name]];
         args = args.concat(_.toArray(arguments).slice(1));
         return this._context.drawImage.apply(this._context, args);
@@ -52,6 +54,7 @@ CanvasInterface = Class.extend({
             if (this.complete) $(this).load();
         });
 
+        // adding a url initiates loading
         img.src = url;
         this._images[name] = img;
 
