@@ -54,6 +54,6 @@ driftSafe = (\x -> x > -10 && x < 10) <~ drift
 isStillGoing : Signal Bool
 isStillGoing = dropWhen ((&&) <~ tiltSafe ~ driftSafe) True (constant False)
 
-scoreNo = count (keepWhen isStillGoing 0 (every second))
+scoreNo = (*) 25 <~ count (keepWhen isStillGoing 0 (every (second/4)))
 
 score = centered . toText . (++) "Score: " . show <~ scoreNo
